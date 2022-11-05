@@ -1,3 +1,7 @@
+
+declare var tippy: any;
+
+
 // Returns if the two items are equal, or if both are null / undefined.
 export function equalsOrBothNull<T>(a: T, b: T, comparator?: (_a: NonNullable<T>, _b: NonNullable<T>) => boolean): boolean {
 	if (a == null && b == null)
@@ -126,7 +130,7 @@ export function downloadString(data: string, fileName: string) {
 	downloadAnchorNode.remove();
 }
 
-export function formatDeltaTextElem(elem: HTMLElement, before: number, after: number, precision: number) {
+export function formatDeltaTextElem(elem: HTMLElement, before: number, after: number, precision: number, before_std:number=0, after_std:number=0, before_iter:number=0, after_iter:number=0) {
 	const delta = after - before;
 	const deltaStr = delta.toFixed(precision);
 	if (delta >= 0) {
@@ -138,6 +142,22 @@ export function formatDeltaTextElem(elem: HTMLElement, before: number, after: nu
 		elem.classList.remove('positive');
 		elem.classList.add('negative');
 	}
+    if ((before_iter > 0) && (after_iter > 0)) { 
+        const before_err = before_std/Math.sqrt(before_iter);
+        const after_err = after_std/Math.sqrt(after_iter);
+        const denom = Math.sqrt(Math.pow(before_err,2) + Math.pow(after_err,2));
+        const z = Math.abs(delta/denom);
+        var significance_str; 
+        if (z > 1.96) { 
+            significance_str = 'Difference is significantly different (p < 0.05)';
+        } else { 
+            significance_str = 'Difference is not significantly different (p > 0.05)';
+        }
+        tippy(elem, {
+                'content': significance_str,
+                'allowHTML': true,
+            });
+    }
 }
 
 // Returns all N pick K permutations of the elements in arr of size N.

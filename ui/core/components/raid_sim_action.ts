@@ -209,12 +209,12 @@ export class RaidSimResultsManager {
 		const simReferenceDpsDiffElem = this.simUI.resultsViewer.contentElem.getElementsByClassName('results-sim-reference-dps-diff')[0] as HTMLSpanElement;
 		const currentDpsMetrics = this.currentData.simResult.raidMetrics.dps;
 		const referenceDpsMetrics = this.referenceData.simResult.raidMetrics.dps;
-		formatDeltaTextElem(simReferenceDpsDiffElem, referenceDpsMetrics.avg, currentDpsMetrics.avg, 2);
+		formatDeltaTextElem(simReferenceDpsDiffElem, referenceDpsMetrics.avg, currentDpsMetrics.avg, 2, referenceDpsMetrics.stdev, currentDpsMetrics.stdev, 3000, 3000);
 
 		const simReferenceHpsDiffElem = this.simUI.resultsViewer.contentElem.getElementsByClassName('results-sim-reference-hps-diff')[0] as HTMLSpanElement;
 		const currentHpsMetrics = this.currentData.simResult.raidMetrics.hps;
 		const referenceHpsMetrics = this.referenceData.simResult.raidMetrics.hps;
-		formatDeltaTextElem(simReferenceHpsDiffElem, referenceHpsMetrics.avg, currentHpsMetrics.avg, 2);
+		formatDeltaTextElem(simReferenceHpsDiffElem, referenceHpsMetrics.avg, currentHpsMetrics.avg, 2, referenceHpsMetrics.stdev, currentHpsMetrics.stdev, 3000, 3000);
 
 		if (this.simUI.isIndividualSim()) {
 			const simReferenceTtoDiffElem = this.simUI.resultsViewer.contentElem.getElementsByClassName('results-sim-reference-tto-diff')[0] as HTMLSpanElement;
@@ -224,9 +224,9 @@ export class RaidSimResultsManager {
 
 			const curPlayerMetrics = this.currentData.simResult.getPlayers()[0]!;
 			const refPlayerMetrics = this.referenceData.simResult.getPlayers()[0]!;
-			formatDeltaTextElem(simReferenceTtoDiffElem, refPlayerMetrics.tto.avg, curPlayerMetrics.tto.avg, 2);
-			formatDeltaTextElem(simReferenceTpsDiffElem, refPlayerMetrics.tps.avg, curPlayerMetrics.tps.avg, 2);
-			formatDeltaTextElem(simReferenceDtpsDiffElem, refPlayerMetrics.dtps.avg, curPlayerMetrics.dtps.avg, 2);
+			formatDeltaTextElem(simReferenceTtoDiffElem, refPlayerMetrics.tto.avg, curPlayerMetrics.tto.avg, 2, refPlayerMetrics.tto.stdev, curPlayerMetrics.tto.stdev, 3000, 3000);
+			formatDeltaTextElem(simReferenceTpsDiffElem, refPlayerMetrics.tps.avg, curPlayerMetrics.tps.avg, 2, refPlayerMetrics.tps.stdev, curPlayerMetrics.tps.stdev, 3000, 3000);
+			formatDeltaTextElem(simReferenceDtpsDiffElem, refPlayerMetrics.dtps.avg, curPlayerMetrics.dtps.avg, 2, refPlayerMetrics.dtps.stdev, curPlayerMetrics.dtps.stdev, 3000, 3000);
 			formatDeltaTextElem(simReferenceCodDiffElem, refPlayerMetrics.chanceOfDeath, curPlayerMetrics.chanceOfDeath, 1);
 		}
 	}
