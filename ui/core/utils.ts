@@ -149,9 +149,9 @@ export function formatDeltaTextElem(elem: HTMLElement, before: number, after: nu
         const z = Math.abs(delta/denom);
         var significance_str; 
         if (z > 1.96) { 
-            significance_str = 'Difference is significantly different (p < 0.05)';
+            significance_str = 'Difference is significantly different.';
         } else { 
-            significance_str = 'Difference is not significantly different (p > 0.05)';
+            significance_str = 'Difference is not significantly different.';
         }
         tippy(elem, {
                 'content': significance_str,
